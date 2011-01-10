@@ -22,6 +22,7 @@ sourceSets.allObjects { SourceSet set ->
         description = "Runs CodeNarc against the ${set.name} Groovy source code and generate XML report."
         reportFile = new File(codeNarcReportsDir, "${set.name}.xml")
         source = set.allGroovy
+        ignoreFailures = true
     }
 }
 
@@ -32,7 +33,7 @@ class CodeNarcXmlReport extends org.gradle.api.plugins.quality.CodeNarc {
         ant.project.addTaskDefinition('codenarc', CodeNarcTask)
         try {
             ant.codenarc(ruleSetFiles: "file:$configFile", maxPriority1Violations: 0, maxPriority2Violations: 0, maxPriority3Violations: 0) {
-                report(type: 'xml', toFile: reportFile)
+                report(type: 'xml', toFile: reportFile, title: 'Sample Groovy Project by mrhaki')
                 source.addToAntBuilder(ant, 'fileset', FileCollection.AntType.FileSet)
             }
         } catch (org.apache.tools.ant.BuildException e) {

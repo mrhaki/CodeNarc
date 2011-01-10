@@ -1,0 +1,3 @@
+task generateDefault << {
+    ant.xslt style: 'styles/default.xslt', out: 'out/default.html', in: 'sample/codenarc-report.xml'
+}
