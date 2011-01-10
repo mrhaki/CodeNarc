@@ -1,0 +1,168 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="default.css" type="text/css">
+</head>
+<body>
+<a name="top"></a>
+<div class="header">
+<h1>
+<img src="haki-logo.png" width="48" height="48">Sample Groovy Project by mrhaki</h1>
+</div>
+<div class="rule"></div>
+<div class="summary">
+<div class="first">
+<dl>
+<dt>Generated</dt>
+<dd>Jan 10, 2011 2:05:22 PM</dd>
+</dl>
+<dl>
+<dt>Tool</dt>
+<dd>
+<a href="http://www.codenarc.org">CodeNarc</a>
+</dd>
+</dl>
+<dl>
+<dt>Version</dt>
+<dd>0.11</dd>
+</dl>
+<dl>
+<dt>Sources</dt>
+<dl>src/main/groovy<br>
+</dl>
+</dl>
+</div>
+<div class="last">
+<ul>
+<li>
+<strong>3</strong><span>total files</span>
+</li>
+<li>
+<strong>3</strong><span>file violations</span>
+</li>
+<li>
+<strong>2</strong><span>priority 1</span>
+</li>
+<li>
+<strong>5</strong><span>priority 2</span>
+</li>
+<li>
+<strong>1</strong><span>priority 3</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="rule"></div>
+<h2>Files</h2>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<th>Name</th><th>Violations</th>
+</tr>
+<tr>
+<td><a href="#f-App.groovy">com/mrhaki/app/App.groovy</a></td><td>3</td>
+</tr>
+<tr>
+<td><a href="#f-Person.groovy">com/mrhaki/app/Person.groovy</a></td><td>1</td>
+</tr>
+<tr>
+<td><a href="#f-PersonService.groovy">com/mrhaki/app/PersonService.groovy</a></td><td>4</td>
+</tr>
+</table>
+<div class="rule"></div>
+<a name="f-App.groovy"></a>
+<h3>
+            File
+            App.groovy</h3>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<th>Priority</th><th>Rule</th><th>Violation Description</th><th>Line</th><th>Source</th>
+</tr>
+<tr>
+<td>1</td><td><a href="#r-Println">Println</a></td><td></td><td>6</td><td><code>println 'Ready for running the App'</code></td>
+</tr>
+<tr>
+<td>1</td><td><a href="#r-Println">Println</a></td><td></td><td>10</td><td><code>println "Found 'mrhaki': ${PersonService.findByNickname('mrhaki')}"</code></td>
+</tr>
+<tr>
+<td>2</td><td><a href="#r-VariableName">VariableName</a></td><td></td><td>8</td><td><code>def PersonService = new PersonService()</code></td>
+</tr>
+</table>
+<a href="#top">Back to top</a>
+<p></p>
+<p></p>
+<a name="f-Person.groovy"></a>
+<h3>
+            File
+            Person.groovy</h3>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<th>Priority</th><th>Rule</th><th>Violation Description</th><th>Line</th><th>Source</th>
+</tr>
+<tr>
+<td>2</td><td><a href="#r-PropertyName">PropertyName</a></td><td></td><td>4</td><td><code>String NAME</code></td>
+</tr>
+</table>
+<a href="#top">Back to top</a>
+<p></p>
+<p></p>
+<a name="f-PersonService.groovy"></a>
+<h3>
+            File
+            PersonService.groovy</h3>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<th>Priority</th><th>Rule</th><th>Violation Description</th><th>Line</th><th>Source</th>
+</tr>
+<tr>
+<td>2</td><td><a href="#r-GStringAsMapKey">GStringAsMapKey</a></td><td>GString as a key in a map is unsafe</td><td>8</td><td><code>
+                    new Person(NAME: 'Hubert Klein Ikkink', "${keyNickname}": 'mrhaki', country: 'The Netherlands')</code></td>
+</tr>
+<tr>
+<td>2</td><td><a href="#r-GStringAsMapKey">GStringAsMapKey</a></td><td>GString as a key in a map is unsafe</td><td>8</td><td><code>
+                    new Person(NAME: 'Hubert Klein Ikkink', "${keyNickname}": 'mrhaki', country: 'The Netherlands')</code></td>
+</tr>
+<tr>
+<td>2</td><td><a href="#r-ParameterName">ParameterName</a></td><td></td><td>12</td><td><code>return persons.find { P -&gt; nickname == P.nickname }</code></td>
+</tr>
+<tr>
+<td>3</td><td><a href="#r-UnnecessaryReturnKeyword">UnnecessaryReturnKeyword</a></td><td></td><td>12</td><td><code>return persons.find { P -&gt; nickname == P.nickname }</code></td>
+</tr>
+</table>
+<a href="#top">Back to top</a>
+<p></p>
+<p></p>
+<div class="rule"></div>
+<h2>Rules</h2>
+<table border="0" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+<th>Name</th><th>Description</th><th>Violations</th>
+</tr>
+<tr>
+<td><a name="r-GStringAsMapKey"></a>GStringAsMapKey</td><td>
+                A GString should not be used as a map key since its hashcode is not guaranteed to be stable. Consider calling key.toString().</td><td>2</td>
+</tr>
+<tr>
+<td><a name="r-ParameterName"></a>ParameterName</td><td>
+                Verifies that the name of each parameter matches a regular expression. This rule applies to method parameters, constructor parameters and closure parameters. By default it checks that parameter names start with a lowercase letter and contains only letters or numbers. The regex property specifies the default regular expression used to validate the parameter name.  The ignoreParameterNames property can specify parameter names that should be ignored, optionally containing wildcard characters ('*' or '?').</td><td>1</td>
+</tr>
+<tr>
+<td><a name="r-Println"></a>Println</td><td>Checks for calls to this.print(), this.println() or this.printf().</td><td>2</td>
+</tr>
+<tr>
+<td><a name="r-PropertyName"></a>PropertyName</td><td>
+                Verifies that the name of each property matches a regular expression. By default it checks that property names other than 'static final' start with a lowercase letter and contains only letters or numbers, and 'static final' property names start with an uppercase letter and contain only uppercase letters, numbers and underscores. The regex property specifies the default regular expression used to validate property names. The finalRegex property specifies the regular expression to validate 'final' property names. The staticRegex property specifies the regular expression to validate 'static' property names. The staticFinalRegex property specifies the regular expression to validate 'static final' property names.  The ignorePropertyNames property can specify property names that should be ignored, optionally containing wildcard characters ('*' or '?').</td><td>1</td>
+</tr>
+<tr>
+<td><a name="r-UnnecessaryReturnKeyword"></a>UnnecessaryReturnKeyword</td><td>
+                In Groovy, the return keyword is often optional. If a statement is the last line in a method or closure then you do not need to have the return keyword.</td><td>1</td>
+</tr>
+<tr>
+<td><a name="r-VariableName"></a>VariableName</td><td>
+                Verifies that the name of each method matches a regular expression. By default it checks that non-'final' variable names start with a lowercase letter and contains only letters or numbers, and 'final' variable names start with an uppercase letter and contain only uppercase letters, numbers and underscores. The regex property specifies the default regular expression used to validate a non-'final' variable name. The finalRegex property specifies the regular expression used to validate 'final' variable names. The ignoreVariableNames property can specify variable names that should be ignored, optionally containing wildcard characters ('*' or '?').</td><td>1</td>
+</tr>
+</table>
+<div class="rule"></div>
+<p>XSLT created by <a href="http://www.mrhaki.com">Hubert A. Klein Ikkink (mrhaki)</a>
+</p>
+</body>
+</html>
