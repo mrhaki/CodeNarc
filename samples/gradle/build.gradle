@@ -1,0 +1,48 @@
+import org.apache.tools.ant.BuildException
+import org.codenarc.ant.CodeNarcTask
+
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'code-quality'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.6'
+}
+
+codeNarcConfigFileName = 'config/codenarc/ruleset.groovy'
+
+codenarcMain.ignoreFailures = true
+
+sourceSets.allObjects { SourceSet set ->
+    tasks.add(name: "${set.getTaskName('codenarc', null)}XmlReport", type: CodeNarcXmlReport) {
+        description = "Runs CodeNarc against the ${set.name} Groovy source code and generate XML report."
+        reportFile = new File(codeNarcReportsDir, "${set.name}.xml")
+        source = set.allGroovy
+    }
+}
+
+class CodeNarcXmlReport extends org.gradle.api.plugins.quality.CodeNarc {
+    @TaskAction
+    public void check() {
+        getLogging().captureStandardOutput(LogLevel.INFO);
+        ant.project.addTaskDefinition('codenarc', CodeNarcTask)
+        try {
+            ant.codenarc(ruleSetFiles: "file:$configFile", maxPriority1Violations: 0, maxPriority2Violations: 0, maxPriority3Violations: 0) {
+                report(type: 'xml', toFile: reportFile)
+                source.addToAntBuilder(ant, 'fileset', FileCollection.AntType.FileSet)
+            }
+        } catch (org.apache.tools.ant.BuildException e) {
+            if (e.message.matches('Exceeded maximum number of priority \\d* violations.*')) {
+                if (ignoreFailures) {
+                    return
+                }
+                throw new GradleException("CodeNarc check violations were found in $source. See the report at $reportFile.", e)
+            }
+            throw e
+        }
+    }
+}
