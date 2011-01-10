@@ -8,6 +8,7 @@
     <xsl:template match="CodeNarc">
         <html>
             <head>
+                <title><xsl:value-of select="Project/@title"/></title>
                 <link rel="stylesheet" href="default.css" type="text/css"/>
             </head>
             <body>
